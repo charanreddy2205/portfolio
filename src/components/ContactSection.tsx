@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Mail, Phone, Github, Linkedin, Send, Instagram, MessageCircle } from "lucide-react";
 import SectionLabel from "./SectionLabel";
+import { toast } from "sonner";
 
 const ContactSection = () => {
   const ref = useRef(null);
@@ -90,19 +91,56 @@ const ContactSection = () => {
           </div>
 
           <form 
-            onSubmit={(e: any) => {
+            onSubmit={async (e: any) => {
               e.preventDefault();
-              const subject = encodeURIComponent(e.target.subject.value);
-              const body = encodeURIComponent(e.target.description.value);
-              window.location.href = `mailto:reddycharan3133@gmail.com?subject=${subject}&body=${body}`;
-              e.target.reset();
+              const form = e.target;
+              const formData = new FormData(form);
+              
+              // You need a Web3Forms Access Key for this to send an actual email!
+              // You can get one for free at https://web3forms.com/
+              // Replace 'YOUR_ACCESS_KEY_HERE' with your actual key
+              formData.append("access_key", "YOUR_ACCESS_KEY_HERE");
+              
+              const promise = fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                body: formData
+              }).then(res => res.json());
+
+              toast.promise(promise, {
+                loading: 'Sending message...',
+                success: (data) => {
+                  if (data.success) {
+                    form.reset();
+                    return 'Message sent successfully!';
+                  } else {
+                    throw new Error(data.message || 'Failed to send');
+                  }
+                },
+                error: 'Failed to send message. Have you added your Web3Forms Access Key?',
+              });
             }}
             className="flex flex-col gap-4 mt-8 border border-white/5 bg-black/10 p-6 sm:p-8 rounded-2xl shadow-inner text-left"
           >
             <div>
               <h3 className="text-lg font-semibold text-foreground/90 mb-1">Send a Direct Message</h3>
-              <p className="text-xs text-muted-foreground mb-4">Fill out the form below and it will draft an email to me instantly.</p>
+              <p className="text-xs text-muted-foreground mb-4">Fill out the form below to send an email directly to my inbox.</p>
             </div>
+
+            <input 
+              name="name"
+              type="text" 
+              placeholder="Your Name" 
+              className="bg-background border border-border rounded-xl px-4 py-3.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all text-sm w-full"
+              required
+            />
+            
+            <input 
+              name="email"
+              type="email" 
+              placeholder="Your Email Address" 
+              className="bg-background border border-border rounded-xl px-4 py-3.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all text-sm w-full"
+              required
+            />
             
             <input 
               name="subject"
@@ -113,7 +151,7 @@ const ContactSection = () => {
             />
             
             <textarea 
-              name="description"
+              name="message"
               placeholder="Description / Message" 
               rows={4}
               className="bg-background border border-border rounded-xl px-4 py-3.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all text-sm resize-none w-full"
