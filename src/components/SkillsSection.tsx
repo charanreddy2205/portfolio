@@ -12,6 +12,10 @@ import {
   Layers,
   Terminal,
   Cpu,
+  Users,
+  Lightbulb,
+  Zap,
+  HeartHandshake
 } from "lucide-react";
 
 const skillCategories = [
@@ -45,6 +49,16 @@ const skillCategories = [
       { name: "SQL", level: 85, icon: Database, color: "from-primary to-accent" },
       { name: "Power BI", level: 88, icon: BarChart3, color: "from-secondary to-accent" },
       { name: "Excel / Sheets", level: 92, icon: FileSpreadsheet, color: "from-accent to-primary" },
+    ],
+  },
+  {
+    id: "soft-skills",
+    label: "Soft Skills",
+    icon: HeartHandshake,
+    skills: [
+      { name: "Problem-Solving", level: 90, icon: Lightbulb, color: "from-primary to-secondary" },
+      { name: "Team Player", level: 95, icon: Users, color: "from-secondary to-accent" },
+      { name: "Adaptability", level: 90, icon: Zap, color: "from-accent to-primary" },
     ],
   },
 ];

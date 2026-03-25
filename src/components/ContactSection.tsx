@@ -94,7 +94,7 @@ const ContactSection = () => {
               e.preventDefault();
               const subject = encodeURIComponent(e.target.subject.value);
               const body = encodeURIComponent(e.target.description.value);
-              window.open(`mailto:reddycharan3133@gmail.com?subject=${subject}&body=${body}`, '_blank');
+              window.location.href = `mailto:reddycharan3133@gmail.com?subject=${subject}&body=${body}`;
               e.target.reset();
             }}
             className="flex flex-col gap-4 mt-8 border border-white/5 bg-black/10 p-6 sm:p-8 rounded-2xl shadow-inner text-left"
