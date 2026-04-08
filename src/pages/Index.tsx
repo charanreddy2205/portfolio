@@ -13,6 +13,7 @@ import AchievementsSection from "@/components/AchievementsSection";
 import ContactSection from "@/components/ContactSection";
 import AIAssistant from "@/components/AIAssistant";
 import FocusMode from "@/components/FocusMode";
+import ExperienceSection from "@/components/ExperienceSection";
 
 const Index = () => {
   return (
@@ -28,6 +29,8 @@ const Index = () => {
         <AboutSection />
         <div className="gradient-divider" />
         <SkillsSection />
+        <div className="gradient-divider" />
+        <ExperienceSection />
         <div className="gradient-divider" />
         <ProjectsSection />
         <div className="gradient-divider" />
